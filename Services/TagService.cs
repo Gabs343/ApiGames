@@ -20,6 +20,10 @@ namespace ApiGames.Services {
 
         }
 
+        public List<Tag> FindByIds(List<long> ids) {
+            return _repository.FindByIds(ids);
+        }
+
         public async Task<Tag> Save(Tag? tag) {
             if (tag == null) { throw new Exception($"The Tag cannot be null"); }
             _repository.Insert(tag);
