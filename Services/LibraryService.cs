@@ -13,12 +13,8 @@ namespace ApiGames.Services {
         }
 
         public async Task<Library> AddGamesToLibrary(Library library, List<long> gamesIds) {
-            foreach (long gameId in gamesIds) {
-                try {
-                    Game game = await _gameService.FindById(gameId);
-                    library.AddGame(game);
-                } catch { }
-            }
+            List<Game>  games = _gameService.FindByIds(gamesIds);
+            games.ForEach(library.AddGame);
             await _repository.Save();
             return library;
         }

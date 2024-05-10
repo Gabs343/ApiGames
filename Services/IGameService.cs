@@ -10,6 +10,8 @@ namespace ApiGames.Services
 
         public Task<Game> FindById(long id);
 
+        public List<Game> FindByIds(List<long> ids);
+
         public Task<Game> AddTagsToGame(Game game, List<long> tagsIds);
 
         public Task<Game> RemoveTagsToGame(Game game, List<long> tagsIds);

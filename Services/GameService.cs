@@ -21,6 +21,10 @@ namespace ApiGames.Services {
             throw new Exception($"Cannot find the game with the id: {id}");
         }
 
+        public List<Game> FindByIds(List<long> ids) {
+            return _repository.FindByIds(ids);
+        }
+
         public async Task<Game> Save(Game? game) {
             if (game == null) throw new Exception($"The Game cannot be null");
             _repository.Insert(game);
@@ -29,29 +33,18 @@ namespace ApiGames.Services {
         }
 
         public async Task<Game> AddTagsToGame(Game game, List<long> tagsIds) {
-            foreach (long tagId in tagsIds) {
-                try {
-                    Tag tag = await _tagService.FindById(tagId);
-                    game.AddTag(tag);
-  
-                } catch (Exception) { }
-
-            }
+            List<Tag> tags = _tagService.FindByIds(tagsIds);
+            tags.ForEach(game.AddTag);
             await _repository.Save();
             return game;
         }
 
         public async Task<Game> RemoveTagsToGame(Game game, List<long> tagsIds) {
-            foreach (long tagId in tagsIds) {
-                try {
-                    Tag tag = await _tagService.FindById(tagId);
-                    game.RemoveTag(tag);
-
-                } catch (Exception) { }
-
-            }
+            List<Tag> tags = _tagService.FindByIds(tagsIds);
+            tags.ForEach(game.RemoveTag);
             await _repository.Save();
             return game;
         }
+
     }
 }
