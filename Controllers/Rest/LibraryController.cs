@@ -21,7 +21,7 @@ namespace ApiGames.Controllers.Rest {
             LibraryResponse? response = null;
 
             try { library = await _service.FindById(id); } 
-            catch (Exception ex) { return NotFound(ex); }
+            catch (Exception ex) { return NotFound(ex.Message); }
 
             try { response = LibraryMapper.GetLibraryResponseFromLibrary(library); } 
             catch (Exception ex) { }
@@ -35,7 +35,7 @@ namespace ApiGames.Controllers.Rest {
             LibraryResponse? response = null;
 
             try { library = await _service.FindById(id); } 
-            catch (Exception ex) { return NotFound(ex); }
+            catch (Exception ex) { return NotFound(ex.Message); }
 
             try { library = await _service.AddGamesToLibrary(library, request.GamesIds); } 
             catch (Exception ex) { }
