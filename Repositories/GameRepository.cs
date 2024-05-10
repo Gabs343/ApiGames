@@ -24,6 +24,12 @@ namespace ApiGames.Repositories
                                 .FirstOrDefaultAsync(gms => gms.Id == id);
         }
 
+        public List<Game> FindByIds(List<long> ids) {
+            return _context.games.Where(gms => ids.Contains(gms.Id))
+                                .Include(gms => gms.Tags)
+                                .ToList();
+        }
+
         public void Insert(Game game)
         {
             _context.games.Add(game);

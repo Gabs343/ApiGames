@@ -8,6 +8,8 @@ namespace ApiGames.Repositories
 
         public Task<Tag?> FindById(long id);
 
+        public List<Tag> FindByIds(List<long> ids);
+
         public void Insert(Tag tag);
 
         public Task Save();
