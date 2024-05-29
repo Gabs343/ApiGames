@@ -30,7 +30,7 @@ namespace ApiGames.Controllers.Rest {
         }
 
         [HttpPost("{id}/AddGames")]
-        public async Task<ActionResult<LibraryResponse>> AddGamesForLibrary(long id, GamesForLibraryRequest request) {
+        public async Task<ActionResult<LibraryResponse>> AddGamesForLibrary(long id, GamesIdsRequest request) {
             Library? library = null;
             LibraryResponse? response = null;
 
