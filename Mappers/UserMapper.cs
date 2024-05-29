@@ -11,7 +11,8 @@ namespace ApiGames.Mappers
             {
                 Name = request.displayName,
                 Mail = request.mail,
-                Library = new Library()
+                Library = new Library(),
+                Wishlist = new Wishlist()
             };
         }
 
