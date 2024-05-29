@@ -7,5 +7,7 @@ namespace ApiGames.Services
         public Task<Library> FindById(long id);
 
         public Task<Library> AddGamesToLibrary(Library library, List<long> gamesIds);
+
+        public Task<List<long>?> GetMissingGamesIds(long id, List<long> gamesIds);
     }
 }
