@@ -12,6 +12,8 @@ namespace ApiGames.Data
 
         public DbSet<Library> libraries { get; set; }
 
+        public DbSet<Wishlist> wishlists { get; set; }
+
         public MyContext() { }
         public MyContext(DbContextOptions<MyContext> options)
             : base(options)
@@ -26,6 +28,7 @@ namespace ApiGames.Data
             modelBuilder.Entity<Tag>().ToTable("Tags").HasKey(tgs => tgs.Id);
             modelBuilder.Entity<User>().ToTable("Users").HasKey(usr => usr.Id);
             modelBuilder.Entity<Library>().ToTable("Libraries").HasKey(lbs => lbs.Id);
+            modelBuilder.Entity<Wishlist>().ToTable("Wishlists").HasKey(wsh => wsh.Id);
 
             modelBuilder.Entity<User>(usr => {
                 usr.Property(u => u.Id).HasColumnType("bigint");
@@ -50,8 +53,18 @@ namespace ApiGames.Data
                 .HasForeignKey<Library>(lbr => lbr.Id)
                 .IsRequired();
 
+            modelBuilder.Entity<User>()
+                .HasOne(usr => usr.Wishlist)
+                .WithOne(whl => whl.User)
+                .HasForeignKey<Wishlist>(whl => whl.Id)
+                .IsRequired();
+
             modelBuilder.Entity<Library>()
                 .HasMany(lbs => lbs.Games)
+                .WithMany();
+
+            modelBuilder.Entity<Wishlist>()
+                .HasMany(wsh => wsh.Games)
                 .WithMany();
 
             modelBuilder.Entity<Game>()
