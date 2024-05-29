@@ -6,6 +6,8 @@ namespace ApiGames.Repositories
     {
         public Task<Library?> FindById(long id);
 
+        public Task<List<long>?> GetMissingGamesIds(long id, List<long> gamesIds);
+
         public Task Save();
     }
 }

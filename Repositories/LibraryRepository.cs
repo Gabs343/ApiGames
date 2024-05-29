@@ -21,6 +21,17 @@ namespace ApiGames.Repositories
                 .FirstOrDefaultAsync(lbs => lbs.Id == id);
         }
 
+        public async Task<List<long>?> GetMissingGamesIds(long id, List<long> gamesIds) {
+            Library? libary = await _context.libraries.Include(lbs => lbs.Games)
+                                .FirstOrDefaultAsync(lbs => lbs.Id == id);
+            if (libary != null) {
+                return gamesIds.Where(id => !libary.Games.Any(gms => gms.Id == id))
+                                .ToList();
+            }
+
+            return null;
+        }
+
         public async Task Save()
         {
             await _context.SaveChangesAsync();
