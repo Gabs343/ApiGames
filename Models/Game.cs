@@ -3,13 +3,17 @@
         public long Id { get; set; }
         public string Name { get; set; }
         public List<Tag> Tags { get; set; }
+        public List<Review> Reviews { get; set; }
+
         public Game() {
             Tags = new List<Tag>();
+            Reviews = new List<Review>();
         }
         public Game(long id, string name) {
             Id = id;
             Name = name;
             Tags = new List<Tag>();
+            Reviews = new List<Review>();
         }
 
         public bool HasTag(long id) {

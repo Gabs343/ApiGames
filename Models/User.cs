@@ -7,9 +7,13 @@
         public string Mail { get; set; }
         public Library Library { get; set; }
 
-        public Wishlist Wishlist { get; set; }  
+        public Wishlist Wishlist { get; set; } 
+        
+        public List<Review> Reviews { get; set; }
 
-        public User() { }
+        public User() { 
+            Reviews = new List<Review>();
+        }
 
         public User(long id, string name, string mail, Library library, Wishlist wishlist)
         {
@@ -18,6 +22,7 @@
             Mail = mail;
             Library = library;
             Wishlist = wishlist;
+            Reviews = new List<Review>();
         }
     }
 }
