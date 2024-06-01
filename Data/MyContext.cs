@@ -14,6 +14,8 @@ namespace ApiGames.Data
 
         public DbSet<Wishlist> wishlists { get; set; }
 
+        public DbSet<Review> reviews { get; set; }
+
         public MyContext() { }
         public MyContext(DbContextOptions<MyContext> options)
             : base(options)
@@ -29,6 +31,7 @@ namespace ApiGames.Data
             modelBuilder.Entity<User>().ToTable("Users").HasKey(usr => usr.Id);
             modelBuilder.Entity<Library>().ToTable("Libraries").HasKey(lbs => lbs.Id);
             modelBuilder.Entity<Wishlist>().ToTable("Wishlists").HasKey(wsh => wsh.Id);
+            modelBuilder.Entity<Review>().ToTable("Reviews").HasKey(rvw => rvw.Id);
 
             modelBuilder.Entity<User>(usr => {
                 usr.Property(u => u.Id).HasColumnType("bigint");
@@ -44,6 +47,13 @@ namespace ApiGames.Data
             modelBuilder.Entity<Tag>(tgs => {
                 tgs.Property(t => t.Id).HasColumnType("bigint");
                 tgs.Property(t => t.Name).HasColumnType("varchar(75)");
+            });
+
+            modelBuilder.Entity<Review>(rvw => {
+                rvw.Property(r => r.Id).HasColumnType("bigint");
+                rvw.Property(r => r.Message).HasColumnType("varchar(125)");
+                rvw.Property(r => r.PostedAt).HasColumnType("date");
+                rvw.Property(r => r.IsRecommended).HasColumnType("bit");
             });
 
             //==================== RELATIONS============================
@@ -70,6 +80,17 @@ namespace ApiGames.Data
             modelBuilder.Entity<Game>()
                 .HasMany(gms => gms.Tags)
                 .WithMany(tgs => tgs.Games);
+
+            modelBuilder.Entity<Review>()
+                .HasOne(rvw => rvw.User)
+                .WithMany(usr => usr.Reviews)
+                .HasForeignKey(rvw => rvw.UserId);
+
+            modelBuilder.Entity<Review>()
+                .HasOne(rvw => rvw.Game)
+                .WithMany(gms => gms.Reviews)
+                .HasForeignKey(rvw => rvw.GameId);
+
         }
     }
 }
