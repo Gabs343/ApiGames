@@ -13,6 +13,12 @@ namespace ApiGames.Services
             _repository = repository;
         }
 
+        public async Task<User> FindById(long id) {
+            User? user = await _repository.FindById(id);
+            if (user != null) { return user; }
+            throw new Exception($"Cannot find the user with the id: {id}");
+        }
+
         public async Task<User> FindByMail(string mail)
         {
             return await _repository.FindByMail(mail);
